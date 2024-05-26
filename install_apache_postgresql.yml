@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install httpd package
+    yum:
+      name: httpd
+      state: latest
+
+  - name: install postgresql package
+    dnf:
+      name: postgresql-server
+      state: latest
+
+...
