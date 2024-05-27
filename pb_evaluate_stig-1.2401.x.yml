@@ -1,0 +1,59 @@
+---
+# This playbook installs and runs the Navy's evaluate STIG powershell script. 
+
+- name: 
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Install powershell lshw
+      ansible.builtin.yum:
+        name: "{{ item }}"
+      loop:
+        - "lshw"
+        - "net-tools"
+        - "powershell"
+        - "unzip"
+      tags:
+        - "package"
+        - "lshw"
+        - "net-tools"
+        - "powershell"
+        - "unzip"
+
+    - name: Copy the files
+      ansible.builtin.copy:
+        src: Evaluate-STIG
+        dest: /opt/tmp/
+        force: true
+      tags:
+        - copy
+
+    - name: Run the script
+      ansible.builtin.command: pwsh /opt/tmp/Evaluate-STIG/Evaluate-STIG.ps1 -OutputPath /opt/STIG_Compliance -Output CKL,CKLB,Summary -PreviousToKeep 5 
+      tags:
+        - script
+        - execute
+
+    - name: Get the checklist files
+      ansible.builtin.find:
+        paths: "/opt/STIG_Compliance/{{ ansible_hostname|upper }}/,/opt/STIG_Compliance/{{ ansible_hostname|upper }}/Checklist/"
+        recurse: true
+        file_type: "any"
+        patterns: "*.log,*.xml,*.html,*.ckl,*.cklb"
+      register: "STIG_checklist"
+      tags:
+        - stat
+        - files_found
+        - fetch
+
+    - name: Fetch the files
+      ansible.builtin.fetch: 
+        src: "{{ item.path }}"
+        dest: "~/Ansible/STIGs/{{ ansible_hostname }}/"
+        flat: yes
+      with_items: "{{ STIG_checklist.files }}"
+      tags:
+        - fetch
+
+...
