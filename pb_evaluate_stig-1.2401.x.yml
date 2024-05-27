@@ -6,14 +6,6 @@
   become: yes
   tasks:
 
-    - name: Install powershell 
-      yum:
-        name: powershell
-        state: present
-      tags:
-        - "package"
-        - "powershell"
-        
     - name: Copy the files
       ansible.builtin.copy:
         src: Evaluate-STIG
