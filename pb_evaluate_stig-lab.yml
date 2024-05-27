@@ -16,7 +16,7 @@
 
     - name: Create the output directory
       ansible.builtin.file:
-        path: "/opt/STIG_Compliance
+        path: "/opt/STIG_Compliance"
         state: directory
         mode: '0755'
 
