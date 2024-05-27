@@ -1,0 +1,72 @@
+<!-- Evaluate-STIG Preferences -->
+<Preferences>
+  <EvaluateSTIG>
+    <!--*************************************************************************************
+    The following Evaluate-STIG parameters may be configured to customize your scan.
+    Any parameter called out on the command line will override the same parameter configured
+    here.
+    **************************************************************************************-->
+    <ScanType>Unclassified</ScanType>        <!--"Unclassified" or "Classified". [default: "Unclassified"]-->
+    <Marking></Marking>                      <!--Text to add to Marking field in STIG Viewer. [default: blank]-->
+    <VulnTimeout>15</VulnTimeout>            <!--Maximum time in minutes to allow a single check to run. [default: "15"]-->
+    <AnswerKey>DEFAULT</AnswerKey>           <!--Answer Key to use from answer files [default: "DEFAULT"]-->
+    <AFPath></AFPath>                        <!--Alternate path to search for answer files. [default: blank]-->
+    <Output>Console</Output>                 <!--"Console"|"CKL"|"CKLB"|"CombinedCKL"|"CombinedCKLB"|"STIGManager"|"Summary"|"OQE". Use comma separation for multiple. If none, output to console. [default: blank]-->
+    <OutputPath></OutputPath>                <!--Alternate path to save results. [default: blank]-->
+    <PreviousToKeep>1</PreviousToKeep>       <!--If -Output is outputting files, maximum number of previous scan results to retain. [default: "0"]-->
+    <AllowDeprecated>false</AllowDeprecated> <!--"true" or "false". [default: "false"]-->
+    <ExcludeSTIG></ExcludeSTIG>              <!--Shortname(s) of STIGs to exclude from scan. Use comma separation to specify multple. [default: blank]-->
+    <ExcludeVuln></ExcludeVuln>              <!--Vuln IDs (V-1234 format) to exclude from scan. Use comma separation to specify multple. [default: blank]-->
+    <SMCollection></SMCollection>            <!--STIG Manager Collection name to use from STIGManager section in this file. [default: blank]-->
+    <ApplyTattoo>false</ApplyTattoo>         <!--"true" or "false". [default: "false"]-->
+  </EvaluateSTIG>
+  <STIGManager>
+    <!--*************************************************************************************
+    STIG Manager
+
+    https://stig-manager.readthedocs.io/en/latest/index.html
+    https://github.com/NUWCDIVNPT/stigman-watcher
+
+    "SMImport" emulates STIGMAN Watcher one-shot functionality
+
+    SMImport_API_BASE=             Required. Base URL of the STIG Manager API service. The default value is your STIGManager instances' FQDN with "/api" appended. This is defined within your STIG Manager's settings via "STIGMAN_CLIENT_API_BASE".
+    SMImport_AUTHORITY=            Required. Base URL of the OIDC authentication service that issues OAuth2 tokens for the API. This should match the value set for "STIGMAN_CLIENT_OIDC_PROVIDER" within STIG Manager's configuration.
+    SMImport_COLLECTION Name=      Required. Name for the SMImport collection settings section that is called from "-SMCollection". Recommend this match your collection name within STIG Manager. Multiple SMImport_COLLECTION sections may be configured.
+      SMImport_CLIENT_ID=          Required. OIDC clientId to authenticate. This should be created within your STIG Manager's backend OIDC Provider. The default provider used by STIG Manager is KeyCloak, though your configuration may vary.
+      SMImport_CLIENT_CERT=        Required. Filename of PEM encoded client certificate. An unencrypted private key may be included within this file so that you do not have to pass "-SMPassphrase", though this configuration is not recommended. File must exist in Certificates directory.
+      SMImport_CLIENT_CERT_KEY=    * Filename of PEM encoded encrypted private key. Required if SM_Import_CLIENT_CERT does not contain a plaintext private key. File must exist in Certificates directory.
+      SMImport_COLLECTION_ID=      Required. The collectionID of your desired collection. This can be found by a user with Manage permissions on the collection. After selecting to manage the collection, reference the "ID" value in the Collection Properties window.
+
+    * Note: Defining SMImport_CLIENT_CERT_KEY will require the use of the "-SMPassphrase" parameter to decrypt the private key.
+
+    EXAMPLE CONFIGURATION BELOW:
+
+    <SMImport_API_BASE>https://my.stig.manager.mil/api</SMImport_API_BASE>
+    <SMImport_AUTHORITY>https://my.stig.manager.mil/kc/realms/stigman</SMImport_AUTHORITY>
+    <SMImport_COLLECTION Name="MyCollection">
+      <SMImport_CLIENT_ID>evaluate-stig</SMImport_CLIENT_ID>
+      <SMImport_CLIENT_CERT>evaluate-stig-crt.pem</SMImport_CLIENT_CERT>
+      <SMImport_CLIENT_CERT_KEY>evaluate-stig-key.pem</SMImport_CLIENT_CERT_KEY>
+      <SMImport_COLLECTION_ID>1</SMImport_COLLECTION>
+    </SMImport_COLLECTION>
+
+    This collection would be used when running:
+    Evaluate-STIG.ps1 -Output STIGManager -SMCollection MyCollection -SMPassphrase <myDecryptionPasswordHere>
+
+    **************************************************************************************-->
+    <SMImport_API_BASE></SMImport_API_BASE>
+    <SMImport_AUTHORITY></SMImport_AUTHORITY>
+    <SMImport_COLLECTION Name="">
+      <SMImport_CLIENT_ID></SMImport_CLIENT_ID>
+      <SMImport_CLIENT_CERT></SMImport_CLIENT_CERT>
+      <SMImport_CLIENT_CERT_KEY></SMImport_CLIENT_CERT_KEY>
+      <SMImport_COLLECTION_ID></SMImport_COLLECTION_ID>
+    </SMImport_COLLECTION>
+  </STIGManager>
+  <ManageAnswerFiles>
+    <EvaluateSTIG_Results></EvaluateSTIG_Results>
+    <AnswerFileDirectory></AnswerFileDirectory>
+    <DefaultAFKey>DEFAULT</DefaultAFKey>
+    <PowerShell_IDE>C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe</PowerShell_IDE>
+  </ManageAnswerFiles>
+</Preferences>

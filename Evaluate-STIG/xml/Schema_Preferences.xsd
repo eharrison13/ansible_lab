@@ -1,0 +1,60 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="Preferences">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="EvaluateSTIG" maxOccurs="1" minOccurs="0">
+          <xs:complexType>
+            <xs:all>
+              <xs:element type="xs:string" name="ScanType" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="Marking" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:integer" name="VulnTimeout" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="AnswerKey" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="AFPath" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="Output" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="OutputPath" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:integer" name="PreviousToKeep" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:boolean" name="AllowDeprecated" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="ExcludeSTIG" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="ExcludeVuln" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="SMCollection" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:boolean" name="ApplyTattoo" maxOccurs="1" minOccurs="0"/>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="STIGManager" maxOccurs="1" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="SMImport_API_BASE" maxOccurs="1" minOccurs="1"/>
+              <xs:element type="xs:string" name="SMImport_AUTHORITY" maxOccurs="1" minOccurs="1"/>
+              <xs:element name="SMImport_COLLECTION" maxOccurs="500" minOccurs="1">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element type="xs:string" name="SMImport_CLIENT_ID" maxOccurs="1" minOccurs="1"/>
+                    <xs:element type="xs:string" name="SMImport_CLIENT_CERT" maxOccurs="1" minOccurs="1"/>
+                    <xs:element type="xs:string" name="SMImport_CLIENT_CERT_KEY" maxOccurs="1" minOccurs="0"/>
+                    <xs:element type="xs:string" name="SMImport_COLLECTION_ID" maxOccurs="1" minOccurs="1"/>
+                  </xs:all>
+                  <xs:attribute type="xs:string" name="Name"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+          <xs:unique name="SMImport_COLLECTIONUniqueKey">
+            <xs:selector xpath="SMImport_COLLECTION"/>
+            <xs:field xpath="@Name"/>
+          </xs:unique>
+        </xs:element>
+        <xs:element name="ManageAnswerFiles" maxOccurs="1" minOccurs="0">
+          <xs:complexType>
+            <xs:all>
+              <xs:element type="xs:string" name="EvaluateSTIG_Results" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="AnswerFileDirectory" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="DefaultAFKey" maxOccurs="1" minOccurs="0"/>
+              <xs:element type="xs:string" name="PowerShell_IDE" maxOccurs="1" minOccurs="0"/>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
