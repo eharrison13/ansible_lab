@@ -6,21 +6,14 @@
   become: yes
   tasks:
 
-    - name: Install powershell lshw
-      ansible.builtin.yum:
-        name: "{{ item }}"
-      loop:
-        - "lshw"
-        - "net-tools"
-        - "powershell"
-        - "unzip"
+    - name: Install powershell 
+      yum:
+        name: powershell
+        state: present
       tags:
         - "package"
-        - "lshw"
-        - "net-tools"
         - "powershell"
-        - "unzip"
-
+        
     - name: Copy the files
       ansible.builtin.copy:
         src: Evaluate-STIG
