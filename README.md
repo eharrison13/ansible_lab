@@ -1,3 +1,3 @@
 # ansible_lab
 
-THis is my Ansible Lab Repo
+This is my Ansible Lab Repo
