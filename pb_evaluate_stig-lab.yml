@@ -19,7 +19,6 @@
         path: "/opt/STIG_Compliance
         state: directory
         mode: '0755'
-      
 
     - name: Run the script
       ansible.builtin.command: pwsh /opt/tmp/Evaluate-STIG/Evaluate-STIG.ps1 -OutputPath /opt/STIG_Compliance -Output CKL,CKLB,Summary -PreviousToKeep 5 
