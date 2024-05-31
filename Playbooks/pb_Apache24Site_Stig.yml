@@ -5,5 +5,5 @@
   hosts: all
   become: yes
   roles:
-    - Apache24_SITE_STIG
+    - Apache_24_Site_STIG
 ...
