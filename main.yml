@@ -1,0 +1,9 @@
+---
+#This role remediates observed open Apache 2.4 SiteUnix STIG vulnerabilities on RHEL8.
+
+- name: stigrule_214277_install_mod_session
+  ansible.builtin.yum
+    name: "mod_session"
+    state: latest
+    tags:
+      - V-214277
