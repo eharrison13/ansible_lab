@@ -8,13 +8,12 @@
   tags:
       - V-214277
 
-- name: stigrule_214277_add_lines_to_httpd_conf
+- name: stigrule_214278_Modify_SSLProtocal_add+TLSv1.2
   ansible.builtin.lineinfile:
-    path: /etc/httpd/conf/httpd.conf
-    line: 'LoadModule usertrack_module modules/mod_usertrack.so'
-    insertbefore: 'Include conf.modules.d/*.conf'
-    state: present
+    path: /etc/httpd/conf.d/ssl.conf
+    regexp: ^#SSLProtocol
+    line: 'SSLProtocol all +TLSv1.2'
   tags:
-    - V-214277
+    - V-214278
 
 ...
