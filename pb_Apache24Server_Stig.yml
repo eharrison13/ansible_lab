@@ -1,0 +1,10 @@
+---
+#Run the apache 2.4 Server STIG against a server
+
+- name: Run the STIG
+  hosts: all
+  become: yes
+  roles:
+    - Apache_24_Server_STIG
+
+...

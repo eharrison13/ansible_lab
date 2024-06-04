@@ -13,7 +13,64 @@
     path: /etc/httpd/conf.d/ssl.conf
     regexp: ^#SSLProtocol
     line: 'SSLProtocol all +TLSv1.2'
+  notify: restart_apache
   tags:
     - V-214278
 
+- name: stigrule_214279_Modify_logformat_line1
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: ^    LogFormat "%h %l %u %t \"%r\" %>s %b
+    line: LogFormat "%a %A %h %H %l %m %s %t %u %U\"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+  notify: restart_apache
+  tags:
+    - V-214279
+
+- name: stigrule_214279_Modify_logformat_line2
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: ^    LogFormat "%h %l %u %t \"%r\" %>s %b" common\s+
+    line: LogFormat "%a %A %h %H %l %m %s %t %u %U\"%r\" %>s %b" common
+  notify: restart_apache
+  tags:
+    - V-214279
+
+- name: stigrule_214279_Modify_logformat_line3
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: ^    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+    line: LogFormat "%a %A %h %H %l %m %s %t %u %U\"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+  notify: restart_apache
+  tags:
+    - V-214279
+  
+- name: stigrule_214291_added_Timeout_httpd_conf
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    line: Timeout 10
+  tags:
+    - V-214291
+
+- name: stigrule_214294_added_TraceEnable_httpd_conf
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    line: TraceEnable Off
+  tags:
+    - V-214294
+
+- name: stigrule_214295_added_SessionMaxAge_httpd_conf
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    line: SessionMaxAge 600
+  tags:
+    - V-214295
+
+- name: stigrule_214301_added_SSLCompression_httpd_conf
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    line: SSLCompression off
+  notify: restart_apache
+  tags:
+    - V-214301
+  
 ...

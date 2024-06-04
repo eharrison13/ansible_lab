@@ -1,6 +1,11 @@
 ---
 - name: restart_apache
   service:
-    name: apachectl
+    name: httpd
+    state: restarted
+
+- name: restart_ssh
+  service:
+    name: sshd
     state: restarted
 ...
